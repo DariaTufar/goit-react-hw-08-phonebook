@@ -1,46 +1,66 @@
-import axios from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
+import {
+  clearAuthHeader,
+  setAuthHeader,
+  createUser,
+  logInUser,
+  logOutUser,
+  getContacts,
+  postContact,
+  patchContact,
+  removeContact,
+} from 'utils/contactsAPI';
 
-axios.defaults.baseURL =
-  'https://63cc4c82ea855154151eab74.mockapi.io/contacts';
+// ==================== Register User ==================
+export const registerUser = createAsyncThunk('user/create', async user => {
+  const newUser = await createUser(user);
+  setAuthHeader(newUser.token);
+  return newUser;
+});
 
-export const fetchContacts = createAsyncThunk(
-  'contacts/fetchAll',
-  
-  async (_, { thunkAPI }) => {
-    try {
-      const response = await axios.get('/contacts');
-     console.log(response)
-      return response.data;
-    } catch (error) {
-     
-      return thunkAPI.rejectWithValue(error.message);
-    }
-  }
-);
+// ==================  Log in User  ==================
+export const signInUser = createAsyncThunk('user/logIn', async user => {
+  const currentUser = await logInUser(user);
+  setAuthHeader(currentUser.token);
+  return currentUser;
+});
 
+// ==================  Log out User  ==================
+export const signOutUser = createAsyncThunk('user/logOut', async () => {
+  const currentUser = await logOutUser();
+  clearAuthHeader();
+  return currentUser;
+});
+
+// ==================  Fetch contacts  ==================
+export const fetchContacts = createAsyncThunk('user/currentUser', async () => {
+  const contacts = await getContacts();
+  return contacts;
+});
+
+// ==================  Add contact  ==================
 export const addContact = createAsyncThunk(
   'contacts/addContact',
-  async ({ name, phone }, thunkAPI) => {
-    try {
-      const response = await axios.post('/contacts', { name, phone });
-      return response.data;
-    } catch (error) {
-      return thunkAPI.rejectWithValue(error.message);
-    }
+  async newContact => {
+    const contact = await postContact(newContact);
+    return contact;
   }
 );
 
+// ==================  Update contact  ==================
+export const updateContact = createAsyncThunk(
+  'contacts/updateContact',
+  async newContact => {
+    const contact = await patchContact(newContact);
+    return contact;
+  }
+);
+
+// ==================  Delete contact  ==================
 export const deleteContact = createAsyncThunk(
   'contacts/deleteContact',
-  async (contactId, thunkAPI) => {
-    try {
-        const response = await axios.delete(`/contacts/${contactId}`);
-        console.log(response.data)
-        return response.data;
-        
-    } catch (error) {
-      return thunkAPI.rejectWithValue(error.message);
-    }
+  async id => {
+    const contact = await removeContact(id);
+    return contact;
   }
 );

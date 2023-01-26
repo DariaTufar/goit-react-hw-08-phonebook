@@ -1,7 +1,15 @@
-export const selectContacts = state => state.contacts.items;
+export const selectors = {
+  email: state => state.user.email,
+  filter: state => state.filter,
+  token: state => state.user.token,
 
-export const selectFilter = state => state.filter;
+  fetchLogIn: state => state.user.fetchLogIn,
+  errorLogIn: state => state.user.errorLogIn,
+  fetchLogOut: state => state.user.fetchLogOut,
+  
+  fetchRegister: state => state.user.fetchRegister,
+  errorRegister: state => state.user.errorRegister,
 
-export const selectIsLoading = state => state.contacts.isLoading;
-
-export const selectError = state => state.contacts.error;
+  isLoading: state => state.contacts.isLoading,
+  addContactIsLoading: state => state.contacts.addContactIsLoading,
+};
