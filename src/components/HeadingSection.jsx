@@ -8,7 +8,8 @@ export const HeadingSection = ({ children, ...props }) => {
       textAlign="center"
       color="brand.500"
       {...props}
-    >
+
+    >  
       {children}
     </Heading>
   );

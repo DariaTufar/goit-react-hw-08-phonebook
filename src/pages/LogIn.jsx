@@ -110,6 +110,7 @@ const LogIn = () => {
                   type="submit"
                   isLoading={fetchLogIn}
                   loadingText="Logging"
+                  
                 >
                   Log in
                 </Button>

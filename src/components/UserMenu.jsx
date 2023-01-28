@@ -54,13 +54,13 @@ export const UserMenu = () => {
       fontWeight="bold"
     >
       {isTitle && (
-        <Heading textAlign="center" fontSize="3xl">
-          Phonebook
+        <Heading textAlign="center" fontSize="3xl" color="yellow.300">
+          Best Phonebook App Ever
         </Heading>
       )}
       {isLogInNav && (
-        <Flex justify="start"  align="stretch" gap="3">
-          <Link to="/" > Home  </Link>
+        <Flex justify="start" align="stretch" gap="3">
+          <Link to="/"> Home </Link>
           <Link to="/register">Register</Link>
           <Link to="/login" bg="yellow.200">
             Log in
